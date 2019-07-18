@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+<bean id="bokimpl" class="com.newer.service.impl.Bokeimpl"></bean>
+    <bean id="tramas" class="com.newer.page.TramAs"></bean>
+    <aop:config>
+        <aop:aspect  ref="tramas" order="1">
+            <aop:pointcut id="metoh" expression="execution(* com.newer.*.impl.*.*(..))"/>
+           <aop:before method="op" pointcut-ref="metoh"/>
+            <aop:after method="ream" pointcut-ref="metoh"/>
+           <!-- 异常通知-->
+            <aop:after-throwing method="after" pointcut-ref="metoh"/>
+            <!--后置通知 调用方法成功返回值才会进去 如果抛出异常则不会进去-->
+            <aop:after-returning method="afterReturing" pointcut-ref="metoh"/>
+
+            <aop:around method="aroun" pointcut-ref="metoh"/>
+        </aop:aspect>
+    </aop:config>
+</beans>
